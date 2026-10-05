@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "Desktop": {
+      "commandName": "Project",
+      "commandLineArgs": "-unpackeddotnet",
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:5120",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Web": {
+      "commandName": "Project",
+      "commandLineArgs": "--web-only",
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:5120",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

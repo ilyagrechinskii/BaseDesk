@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
+    <Title>BaseDesk</Title>
+    <ElectronPackageId>basedesk</ElectronPackageId>
+    <ElectronVersion>44.5.1</ElectronVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ElectronNET.Core" Version="0.6.0" />
+    <PackageReference Include="ElectronNET.Core.AspNet" Version="0.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="../../frontend/**/*"
+             Link="wwwroot/%(RecursiveDir)%(Filename)%(Extension)"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

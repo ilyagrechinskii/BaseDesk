@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>BaseDesk</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <span class="brand">BaseDesk</span>
+    <span class="version">Стартовая версия</span>
+  </header>
+
+  <main class="workspace">
+    <section class="welcome" aria-labelledby="welcome-title">
+      <p class="eyebrow">Рабочее пространство</p>
+      <h1 id="welcome-title">Добро пожаловать в BaseDesk</h1>
+      <p class="description">Здесь начинается работа над приложением для бизнеса и команд.</p>
+
+      <div class="connection">
+        <p id="backend-status" role="status" aria-live="polite">Проверяем соединение с backend…</p>
+        <button id="check-connection" type="button">Проверить соединение</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

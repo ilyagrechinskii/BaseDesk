@@ -1,0 +1,55 @@
+# .NET and Visual Studio
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+*.sln.ide
+*.slnx.ide
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.nupkg
+*.snupkg
+
+# Electron.NET and Node.js
+node_modules/
+.electron/
+ElectronHostHook/
+dist/
+artifacts/
+publish/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local configuration and data
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+appsettings.*.Local.json
+*.local.json
+*.local.settings.json
+*.db
+*.db-shm
+*.db-wal
+
+# IDE and temporary files
+.idea/
+.vscode/
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
