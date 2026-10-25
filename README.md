@@ -2,7 +2,9 @@
 
 Десктопное приложение для организации данных и рабочих процессов небольших компаний и команд, вдохновлённое Airtable. Проект разрабатывается в рамках вузовской проектной деятельности.
 
-Сейчас реализован стартовый каркас: окно Electron.NET, минимальный ASP.NET Core backend и главная страница, которая проверяет соединение с backend через `GET /api/health`. Бизнес-функции пока не реализованы.
+Проект переходит на самостоятельный Electron и отдельный ASP.NET Core Web API. Сейчас подготовлены архитектурные документы и рабочие каталоги для параллельной разработки; новый стек ещё не реализован. Бизнес-функций пока нет.
+
+Старый Electron.NET-прототип сохранён в ветке `legacy/electron-net`, которую нельзя изменять. Его файлы пока остаются и в текущем дереве для осторожной миграции; это не реализация новой архитектуры.
 
 ## Состав команды
 
@@ -18,38 +20,48 @@
 
 ## Стек
 
-- C# и .NET 10 / ASP.NET Core.
-- Electron.NET (`ElectronNET.Core` и `ElectronNET.Core.AspNet` 0.6.0), Electron 44.5.1.
-- JavaScript, HTML и CSS без frontend-фреймворка и сборщика.
+- Electron — отдельная десктопная оболочка.
+- HTML, CSS и обычный JavaScript без frontend-фреймворков и TypeScript.
+- ASP.NET Core Web API, .NET 10 — отдельное приложение с бизнес-логикой.
+- PostgreSQL и EF Core — постоянное хранение данных и ORM.
+- Docker Compose — локальное развёртывание API и БД на следующих этапах.
+
+Frontend взаимодействует с API через HTTP/JSON. Прямого доступа клиента к PostgreSQL нет. На первой неделе страницы используют mock-данные.
 
 ## Структура
 
 ```text
-BaseDesk.sln                 Решение для Visual Studio
-global.json                  Выбор версии .NET SDK
-docs/
-  running.md                 Инструкция локального запуска
+desktop/                     Electron — Александр
 src/
-  backend/BaseDesk.App/
-    BaseDesk.App.csproj       Проект и зависимости Electron.NET
-    Program.cs               Запуск backend, окна и проверочного API
-    Properties/
-      launchSettings.json    Профили Desktop и Web
-      electron-builder.json  Конфигурация упаковки Electron для Windows
+  backend/                   Отдельный API — Андрей
+    BaseDesk.App/            Сохранённый Electron.NET-прототип
   frontend/
-    index.html               Стартовый экран
-    styles.css               Стили
-    app.js                   Проверка соединения с backend
-design/
-  figma-link.md              Ссылка на дизайн
+    pages/home/              Главная — Никита
+    pages/clients/           Клиенты — Дмитрий
+    pages/tasks/             Задачи — Артём
+    components/              Общие компоненты — Наталья
+    styles/                  Общие стили — Наталья
+docs/                        Архитектура, контракты и правила команды
+BaseDesk.sln, global.json     Пока относятся к прототипу
 ```
 
-Backend и frontend запускаются как одно приложение. При сборке файлы `src/frontend` копируются в `wwwroot` выходного каталога. Редактировать нужно исходники в `src/frontend`, а не копии в `bin`.
+Каталоги новой архитектуры содержат README-заготовки; готовых приложений и экранов там ещё нет. Старые `src/frontend/index.html`, `styles.css`, `app.js` сохранены без изменений.
+
+## Документация и начало работы
+
+- [Архитектура и переход от прототипа](docs/architecture.md).
+- [Локальная разработка и самостоятельный просмотр страниц](docs/development.md).
+- [Рабочие области frontend и подключение экранов](docs/frontend-conventions.md).
+- [Правила HTML/CSS/JavaScript](docs/frontend-coding-rules.md).
+- [Предварительные модели](docs/domain-models.md), [API-контракты](docs/api-contracts.md) и [mock-данные](docs/examples/mock-data.json).
+- [Постоянные ветки команды](docs/team-workflow.md) и [проверка PR](docs/pull-request-review.md).
+
+У каждого участника постоянная именная ветка: `ilya`, `alexander`, `andrey`, `natalia`, `nikita`, `dmitry`, `artem`. Новые feature-ветки под Issues не используются. Готовые задачи объединяются в `main` через проверенный PR. API-контракты требуют согласования с Андреем до реализации.
 
 ## Локальный запуск
 
-Требования, команды запуска из VS Code и Visual Studio, браузерный режим и решение типичных проблем описаны в [docs/running.md](docs/running.md).
+Новый порядок работы описан в [docs/development.md](docs/development.md). Команды запуска Electron, API и Compose будут добавлены владельцами после реализации. [docs/running.md](docs/running.md) описывает исключительно старый Electron.NET-прототип.
 
 ## Дизайн
 
-Ссылка на Figma хранится в [design/figma-link.md](design/figma-link.md).
+Используем уже утверждённые изображения экранов BaseDesk. Новый дизайн и работа в Figma не требуются. Историческая ссылка в `design/figma-link.md` сохранена как справочная.
