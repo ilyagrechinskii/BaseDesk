@@ -55,7 +55,6 @@ BaseDesk.sln, global.json     Пока относятся к прототипу
 - [Правила HTML/CSS/JavaScript](docs/frontend-coding-rules.md).
 - [Предварительные модели](docs/domain-models.md), [API-контракты](docs/api-contracts.md) и [mock-данные](docs/examples/mock-data.json).
 - [Постоянные ветки команды](docs/team-workflow.md) и [проверка PR](docs/pull-request-review.md).
-- [План небольших коммитов и публикации Issue #1](docs/commit-plan.md).
 
 У каждого участника постоянная именная ветка: `ilya`, `alexander`, `andrey`, `natalia`, `nikita`, `dmitry`, `artem`. Новые feature-ветки под Issues не используются. Готовые задачи объединяются в `main` через проверенный PR. API-контракты требуют согласования с Андреем до реализации.
 
