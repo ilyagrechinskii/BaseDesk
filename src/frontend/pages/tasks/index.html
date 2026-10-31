@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Задачи — BaseDesk (preview)</title>
+  <link rel="stylesheet" href="./page.css">
+  <style>
+    /* Только для автономного просмотра: фон и отступы области контента вместо будущей оболочки. */
+    .tasks-preview {
+      margin: 0;
+      min-height: 100vh;
+      background: #f4f7fc;
+    }
+
+    .tasks-preview__content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+  </style>
+  <script type="module" src="./preview.js"></script>
+</head>
+<body class="tasks-preview">
+  <main class="tasks-preview__content" id="tasks-root"></main>
+</body>
+</html>
