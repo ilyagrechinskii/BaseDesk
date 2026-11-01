@@ -1,0 +1,1 @@
+console.log('BaseDesk frontend initialized.');

@@ -1,0 +1,12 @@
+{
+  "name": "basedesk-desktop",
+  "version": "1.0.0",
+  "description": "Desktop wrapper for BaseDesk",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^30.0.0"
+  }
+}
