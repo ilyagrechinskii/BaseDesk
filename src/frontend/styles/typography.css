@@ -1,0 +1,7 @@
+/* Manrope: Google Fonts, SIL Open Font License; see fonts/manrope/OFL.txt. */
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 400; font-display: swap; src: url("./fonts/manrope/manrope-400.ttf") format("truetype"); }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 500; font-display: swap; src: url("./fonts/manrope/manrope-500.ttf") format("truetype"); }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 600; font-display: swap; src: url("./fonts/manrope/manrope-600.ttf") format("truetype"); }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 700; font-display: swap; src: url("./fonts/manrope/manrope-700.ttf") format("truetype"); }
+
+:root { --bd-font-family: "Manrope", "Segoe UI", system-ui, sans-serif; }
