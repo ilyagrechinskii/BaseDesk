@@ -1,0 +1,9 @@
+{
+  "name": "basedesk",
+  "version": "1.0.0",
+  "description": "BaseDesk Project",
+  "scripts": {
+    "start": "npm --prefix desktop start",
+    "install-desktop": "npm --prefix desktop install"
+  }
+}
