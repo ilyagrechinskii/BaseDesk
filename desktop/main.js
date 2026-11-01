@@ -7,13 +7,13 @@ function createWindow() {
     height: 800,
     title: 'BaseDesk',
     webPreferences: {
-      contextIsolation: true,
-      nodeIntegration: false,
+      contextIsolation: true,       // Сохранено: изолированный контекст
+      nodeIntegration: false,       // Сохранено: отключена интеграция Node.js в рендерере
       preload: path.join(__dirname, 'preload.js')
     }
   });
 
-  // Загружаем HTML-страница из src/frontend/
+  // Загрузка HTML-интерфейса из src/frontend/
   mainWindow.loadFile(path.join(__dirname, '../src/frontend/index.html'));
 }
 
@@ -27,7 +27,7 @@ app.whenReady().then(() => {
   });
 });
 
-// Корректное закрытие приложения для всех ОС
+// Гарантирует корректное завершение процесса приложения при закрытии всех окон
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
