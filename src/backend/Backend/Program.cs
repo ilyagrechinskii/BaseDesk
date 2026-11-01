@@ -1,11 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// (çäåñü ïîçæå ïîÿâÿòñÿ ñåðâèñû: EF Core, ðåïîçèòîðèè è ò.ä.)
-
+// Ð¡ÐµÑ€Ð²Ð¸ÑÑ‹ API Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð¸Ñ€ÑƒÑŽÑ‚ÑÑ Ð·Ð´ÐµÑÑŒ; Ð¿Ð¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Ð‘Ð” â€” Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½Ñ‹Ð¹ ÑÑ‚Ð°Ð¿.
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 app.MapGet("/api/health", () => Results.Json(new { status = "ok" }));
 
 app.Run();
