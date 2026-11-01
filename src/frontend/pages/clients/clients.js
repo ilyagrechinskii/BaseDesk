@@ -16,28 +16,28 @@ const TEMPLATE = `
     </header>
 
     <div class="toolbar">
-      <span class="tab"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Таблица</span>
-      <button class="calendar-tab" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>Календарь <span class="soon">Скоро</span></button>
+      <span class="tab"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 10h16M4 14.5h16M9 10v9"/></svg>Таблица</span>
       <span class="toolbar__spacer"></span>
       <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input data-role="search" type="search" placeholder="Поиск по клиентам…" aria-label="Поиск по клиентам"></label>
-      <button class="icon-btn" type="button" aria-label="Фильтры" data-demo="Фильтры — скоро"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button>
+      <button class="btn filter-button" type="button" aria-label="Фильтры" data-demo="Фильтры — скоро"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button>
     </div>
 
     <section class="card">
+      <div class="table-wrap" data-role="table-wrap">
       <table data-role="clients-table">
         <thead>
           <tr>
             <th class="col-check"><input type="checkbox" data-role="check-all" aria-label="Выбрать всех"></th>
             <th scope="col">Компания / Имя</th>
             <th scope="col">Контакты</th>
-            <th scope="col">Статус</th>
             <th scope="col">Последний контакт</th>
             <th scope="col">Ответственный</th>
-            <th scope="col" class="col-actions" aria-label="Действия"><span aria-hidden="true">⋮</span></th>
+            <th scope="col" class="col-actions" aria-label="Действия">Действия</th>
           </tr>
         </thead>
         <tbody data-role="clients-body"></tbody>
       </table>
+      </div>
 
       <div class="empty" data-role="empty-state" hidden>
         <h2 class="empty__title" data-role="empty-title">Клиентов пока нет</h2>
@@ -58,7 +58,6 @@ const TEMPLATE = `
   </div>
 
   <div class="menu" data-role="row-menu" role="menu" hidden>
-    <button class="menu__item" role="menuitem" type="button" data-action="view"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Просмотр</button>
     <button class="menu__item" role="menuitem" type="button" data-action="edit"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"/></svg>Редактировать</button>
     <button class="menu__item" role="menuitem" type="button" data-action="delete"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Удалить</button>
   </div>
@@ -79,7 +78,7 @@ export function mountClientsPage(root, { data } = {}) {
   }
   const all = Array.isArray(data?.clients) ? data.clients.map(client => ({ ...client })) : [];
   var body = find("clients-body");
-  var table = find("clients-table");
+  var table = find("table-wrap");
   var empty = find("empty-state");
   var foot = find("foot");
   var count = find("count");
@@ -97,11 +96,6 @@ export function mountClientsPage(root, { data } = {}) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
-  }
-
-  function statusBadge(status) {
-    const labels = { active: "Активный", inProgress: "В работе", new: "Новый" };
-    return labels[status] ? '<span class="status status--' + status + '">' + labels[status] + '</span>' : '—';
   }
 
   function formatDate(value) {
@@ -131,7 +125,6 @@ export function mountClientsPage(root, { data } = {}) {
         '<div><div class="who__name">' + esc(c.name) + '</div><div class="who__sub">Клиент с ' + esc(c.since ?? (c.createdAt ? c.createdAt.slice(0, 4) : "—")) + '</div></div></div></td>' +
         '<td><div class="contacts"><span class="contact">' + ICON_PHONE + esc(c.phone ?? "—") + '</span>' +
         '<span class="contact">' + ICON_MAIL + esc(c.email ?? "—") + '</span></div></td>' +
-        '<td>' + statusBadge(c.status) + '</td>' +
         '<td class="last-contact">' + esc(formatDate(c.lastContact)) + '</td>' +
         '<td><span class="owner">' + (c.owner ? '<span class="owner__avatar">' + esc(c.owner.charAt(0)) + '</span><span>' + esc(c.owner) + '</span>' : '—') + '</span></td>' +
         '<td class="col-actions"><button type="button" class="row-menu-btn" aria-haspopup="menu" aria-expanded="false" aria-label="Действия: ' + esc(c.name) + '">' + ICON_DOTS + '</button></td></tr>';
@@ -178,7 +171,7 @@ export function mountClientsPage(root, { data } = {}) {
   listen(menu, "click", function (e) {
     var item = e.target.closest("[data-action]");
     if (!item || !activeClient) return;
-    var names = { view: "Просмотр", edit: "Редактирование", delete: "Удаление" };
+    var names = { edit: "Редактирование", delete: "Удаление" };
     var msg = names[item.dataset.action] + ": " + activeClient.name + " — скоро";
     closeMenu(true);
     say(msg);

@@ -1,31 +1,27 @@
-/*
- * Стили экрана «Задачи». Все правила ограничены корнем .tasks-page.
- * Локальные переменные --tasks-* временные: после появления общих токенов --bd-* в styles/
- * повторяющиеся значения переносятся туда по согласованию с Натальей.
- */
+/* Экран задач использует общую палитру BaseDesk из styles/tokens.css. */
 
 .tasks-page {
-  --tasks-text: #1b2559;
-  --tasks-text-muted: #7c88a6;
-  --tasks-text-soft: #a3aec7;
-  --tasks-surface: #ffffff;
-  --tasks-surface-soft: #f7f9fd;
-  --tasks-border: #e7ecf5;
-  --tasks-primary: #2f6bff;
-  --tasks-primary-soft: #e8f0ff;
-  --tasks-ai: #7b3ff2;
-  --tasks-radius: 12px;
-  --tasks-radius-sm: 8px;
-  --tasks-shadow: 0 1px 2px rgba(27, 37, 89, 0.04), 0 8px 24px rgba(27, 37, 89, 0.06);
+  --tasks-text: var(--bd-text);
+  --tasks-text-muted: var(--bd-text-muted);
+  --tasks-text-soft: var(--bd-text-muted);
+  --tasks-surface: var(--bd-surface);
+  --tasks-surface-soft: var(--bd-surface-soft);
+  --tasks-border: var(--bd-border);
+  --tasks-primary: var(--bd-primary);
+  --tasks-primary-soft: var(--bd-primary-soft);
+  --tasks-ai: var(--bd-ai);
+  --tasks-radius: var(--bd-radius);
+  --tasks-radius-sm: var(--bd-radius-sm);
+  --tasks-shadow: none;
   --tasks-focus: 0 0 0 3px rgba(47, 107, 255, 0.25);
 
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
   color: var(--tasks-text);
   font-family: var(--bd-font-family, "Manrope", "Segoe UI", system-ui, sans-serif);
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .tasks-page *,
@@ -90,15 +86,15 @@
 
 .tasks-page__title {
   margin: 0;
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 22px;
+  font-weight: 600;
   line-height: 1.2;
 }
 
 .tasks-page__subtitle {
   margin: 4px 0 0;
   color: var(--tasks-text-muted);
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .tasks-page__header-actions {
@@ -113,7 +109,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 40px;
+  height: 36px;
   padding: 0 16px;
   border: 1px solid var(--tasks-border);
   border-radius: var(--tasks-radius-sm);
@@ -122,6 +118,7 @@
   font-size: 13px;
   cursor: pointer;
   transition: background-color 0.15s, border-color 0.15s;
+  color: #6c8fb9;
 }
 
 .tasks-page__button:hover:not(:disabled) {
@@ -146,6 +143,7 @@
 
 .tasks-page__button--ai {
   color: var(--tasks-ai);
+  border-color: #e9dfff;
 }
 
 .tasks-page__icon-button {
@@ -166,10 +164,11 @@
 }
 
 .tasks-page__icon-button--bordered {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border: 1px solid var(--tasks-border);
   background: var(--tasks-surface);
+  color: var(--tasks-text-muted);
 }
 
 .tasks-page__back {
@@ -189,6 +188,10 @@
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
+  padding: 7px 9px;
+  border: 1px solid var(--tasks-border);
+  border-radius: 9px;
+  background: #f4f9fe;
 }
 
 .tasks-page__views,
@@ -203,14 +206,15 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 36px;
+  height: 32px;
   padding: 0 14px;
-  border: 1px solid var(--tasks-border);
+  border: 1px solid transparent;
   border-radius: var(--tasks-radius-sm);
-  background: var(--tasks-surface);
+  background: transparent;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  color: var(--tasks-text-muted);
 }
 
 .tasks-page__view:disabled {
@@ -219,17 +223,18 @@
 
 .tasks-page__view--active {
   border-color: transparent;
-  background: var(--tasks-primary-soft);
-  color: var(--tasks-primary);
+  background: var(--bd-active-tab-bg);
+  color: var(--bd-active-tab-text);
+  font-weight: 700;
 }
 
 .tasks-page__search {
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 260px;
-  height: 36px;
-  padding: 0 12px;
+  width: 220px;
+  height: 32px;
+  padding: 0 10px;
   border: 1px solid var(--tasks-border);
   border-radius: var(--tasks-radius-sm);
   background: var(--tasks-surface);
@@ -248,7 +253,7 @@
   background: transparent;
   color: var(--tasks-text);
   font: inherit;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .tasks-page__search-input:focus-visible {
@@ -260,12 +265,18 @@
 }
 
 .tasks-page__filters .tasks-page__button {
-  height: 36px;
+  height: 32px;
+  width: 32px;
+  padding: 0;
+  justify-content: center;
 }
 
 /* Таблица */
 
 .tasks-page__card {
+  display: flex;
+  flex-direction: column;
+  min-height: var(--bd-table-card-min-height);
   position: relative;
   border: 1px solid var(--tasks-border);
   border-radius: var(--tasks-radius);
@@ -274,6 +285,7 @@
 }
 
 .tasks-page__table-wrap {
+  flex: 1;
   overflow-x: auto;
   border-radius: var(--tasks-radius) var(--tasks-radius) 0 0;
 }
@@ -285,8 +297,8 @@
 }
 
 .tasks-page__cell {
-  height: 56px;
-  padding: 0 12px;
+  height: 63px;
+  padding: 0 14px;
   border-bottom: 1px solid var(--tasks-border);
   text-align: left;
   vertical-align: middle;
@@ -294,10 +306,11 @@
 }
 
 .tasks-page__table thead .tasks-page__cell {
-  height: 44px;
+  height: 48px;
   color: var(--tasks-text-muted);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  background: #f5faff;
 }
 
 .tasks-page__cell--check {
@@ -312,12 +325,13 @@
 
 .tasks-page__cell--muted {
   color: var(--tasks-text-muted);
+  font-size: 12px;
 }
 
 .tasks-page__cell--actions {
   width: 96px;
   padding-right: 20px;
-  text-align: center;
+  text-align: right;
 }
 
 .tasks-page__row {
@@ -330,24 +344,28 @@
 }
 
 .tasks-page__checkbox {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   margin: 0;
   accent-color: var(--tasks-primary);
   cursor: pointer;
+  appearance: none;
+  border: 1px solid #bfd7ef;
+  border-radius: 4px;
+  background: white;
 }
 
 .tasks-page__actions-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
+  width: 28px;
   height: 28px;
   padding: 0;
-  border: 1px solid var(--tasks-border);
+  border: 0;
   border-radius: var(--tasks-radius-sm);
-  background: var(--tasks-surface);
-  color: var(--tasks-text);
+  background: transparent;
+  color: var(--tasks-text-muted);
   cursor: pointer;
 }
 
@@ -368,10 +386,10 @@
 .tasks-page__badge {
   display: inline-flex;
   align-items: center;
-  height: 26px;
+  height: 22px;
   padding: 0 10px;
-  border-radius: 6px;
-  font-size: 12px;
+  border-radius: 12px;
+  font-size: 11px;
   font-weight: 600;
 }
 
@@ -408,18 +426,19 @@
 /* Нижняя панель и пагинация */
 
 .tasks-page__footer {
+  margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  padding: 14px 20px;
+  padding: 10px 12px;
 }
 
 .tasks-page__summary {
   margin: 0;
   color: var(--tasks-text-muted);
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .tasks-page__pagination {
@@ -428,8 +447,8 @@
 }
 
 .tasks-page__page-button {
-  min-width: 32px;
-  height: 32px;
+  min-width: 29px;
+  height: 29px;
   padding: 0 8px;
   border: 1px solid var(--tasks-border);
   border-radius: var(--tasks-radius-sm);
@@ -454,6 +473,8 @@
 /* Пустое состояние */
 
 .tasks-page__empty {
+  flex: 1;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -537,3 +558,7 @@
     width: 100%;
   }
 }
+
+.tasks-page__checkbox:checked { background: var(--tasks-primary); box-shadow: inset 0 0 0 3px white; }
+.tasks-page__checkbox:indeterminate { background: var(--tasks-primary-soft); border-color: var(--tasks-primary); box-shadow: inset 0 -5px white, inset 0 5px white; }
+.tasks-page__search svg { width: 13px; height: 13px; }

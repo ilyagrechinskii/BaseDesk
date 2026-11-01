@@ -68,9 +68,8 @@ const TEMPLATE = `
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM20 20l-4-4"/></svg>
           <input class="tasks-page__search-input" type="search" placeholder="Поиск задач..." autocomplete="off" data-role="search">
         </label>
-        <button class="tasks-page__button" type="button" disabled title="Появится на следующих этапах">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/></svg>
-          Фильтры
+        <button class="tasks-page__button" type="button" disabled aria-label="Фильтры" title="Появится на следующих этапах">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
         </button>
       </div>
     </div>

@@ -1,0 +1,19 @@
+/* Общая светлая палитра и размеры рабочих областей BaseDesk. */
+:root {
+  --bd-content-max-width: 1200px;
+  /* Восемь строк по 63px, заголовок 48px, нижняя панель и рамки. */
+  --bd-table-card-min-height: 604px;
+  --bd-active-tab-bg: #dceaff;
+  --bd-active-tab-text: #246ff0;
+  --bd-text: #21375e;
+  --bd-text-muted: #7d9bc2;
+  --bd-surface: #fbfdff;
+  --bd-surface-soft: #f7fbff;
+  --bd-border: #e0ecf8;
+  --bd-primary: #2f6fed;
+  --bd-primary-soft: #e3eeff;
+  --bd-ai: #7c3aed;
+  --bd-radius: 12px;
+  --bd-radius-sm: 8px;
+  --bd-shadow: 0 1px 2px rgba(27, 37, 89, 0.04), 0 8px 24px rgba(27, 37, 89, 0.06);
+}
