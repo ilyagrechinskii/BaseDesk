@@ -12,20 +12,20 @@ const DEMO_TIMESTAMP = '2026-10-26T09:00:00Z';
 // Поля assignee и priority пока отсутствуют в общем DTO Task (docs/domain-models.md).
 // Это предложение для согласования с Андреем и Ильёй; страница корректно показывает «—», если их нет.
 const DEMO_TASKS = [
-  ['Связаться с новым клиентом', 'Александр', 'high', '2026-11-02', 'todo', DEMO_CLIENT_ID],
-  ['Подготовить коммерческое предложение', 'Наталья', 'medium', '2026-11-05', 'inProgress', DEMO_CLIENT_ID],
-  ['Проверить остатки товаров', 'Дмитрий', 'high', '2026-10-31', 'done', null],
-  ['Обновить информацию о заказах', 'Андрей', 'medium', '2026-11-04', 'inProgress', null],
-  ['Согласовать условия поставки', 'Александр', 'high', '2026-11-08', 'todo', DEMO_CLIENT_ID],
-  ['Подготовить отчёт за неделю', 'Илья', 'low', '2026-11-09', 'todo', null],
-  ['Проверить оплату заказов', 'Дмитрий', 'medium', '2026-11-06', 'inProgress', null],
-  ['Заказать расходные материалы', 'Никита', 'low', '2026-11-10', 'done', null],
-].map(([title, assignee, priority, dueDate, status, clientId], index) => ({
+  ['Связаться с новым клиентом', 'Александр', 'high', '2026-11-02', 'todo', DEMO_CLIENT_ID, 'Уточнить потребности и отправить презентацию в течение дня.'],
+  ['Подготовить коммерческое предложение', 'Наталья', 'medium', '2026-11-05', 'inProgress', DEMO_CLIENT_ID, null],
+  ['Проверить остатки товаров', 'Дмитрий', 'high', '2026-10-31', 'done', null, null],
+  ['Обновить информацию о заказах', 'Андрей', 'medium', '2026-11-04', 'inProgress', null, null],
+  ['Согласовать условия поставки', 'Александр', 'high', '2026-11-08', 'todo', DEMO_CLIENT_ID, null],
+  ['Подготовить отчёт за неделю', 'Илья', 'low', '2026-11-09', 'todo', null, null],
+  ['Проверить оплату заказов', 'Дмитрий', 'medium', '2026-11-06', 'inProgress', null, null],
+  ['Заказать расходные материалы', 'Никита', 'low', '2026-11-10', 'done', null, null],
+].map(([title, assignee, priority, dueDate, status, clientId, description], index) => ({
   id: `44444444-4444-4444-8444-${String(index + 1).padStart(12, '0')}`,
   organizationId: DEMO_ORGANIZATION_ID,
   clientId,
   title,
-  description: null,
+  description,
   status,
   dueDate,
   assignee,
