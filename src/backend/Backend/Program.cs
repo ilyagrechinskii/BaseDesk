@@ -47,25 +47,6 @@ app.UseStatusCodePages(async context =>
 // 5) Health (как было)
 app.MapGet("/api/health", () => Results.Json(new { status = "ok" }));
 
-// 6) Пример эндпоинта с фильтром валидации
-app.MapPost("/api/organizations", (CreateOrganizationRequest req) =>
-{
-    // временная реализация; после EF Core заменится на репозиторий
-    var id = Guid.NewGuid();
-    var now = DateTimeOffset.UtcNow;
-    var created = new
-    {
-        id,
-        name = req.Name.Trim(),
-        description = req.Description?.Trim(),
-        createdAt = now,
-        updatedAt = now,
-        workspaceCount = 0,
-        memberCount = 1
-    };
-    return Results.Created($"/api/organizations/{id}", created);
-})
-.AddEndpointFilter<ValidationFilter<CreateOrganizationRequest>>();
 
 app.MapGet("/api/organizations/{id:guid}", (Guid id) =>
 {

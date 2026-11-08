@@ -142,111 +142,41 @@ public record SectionResponse(
 
 ### 4.1. Создание организации
 
-```http
-POST /api/organizations
-Content-Type: application/json
-
-{
-  "name": "ООО Ромашка",
-  "description": "Студия дизайна"
-}
-```
+curl.exe -i -X POST http://localhost:5261/api/organizations -H "Content-Type: application/json" -d "{\"name\":\"Тест\",\"description\":null}"
 
 **Ответ `201 Created`** (`Location: /api/organizations/{guid}`):
 
-```json
-{
-  "id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
-  "name": "ООО Ромашка",
-  "description": "Студия дизайна",
-  "createdAt": "2026-11-06T14:30:00+00:00",
-  "updatedAt": "2026-11-06T14:30:00+00:00",
-  "workspaceCount": 0,
-  "memberCount": 1
-}
-```
-
 ### 4.2. Получение организации
 
-```http
-GET /api/organizations/3f2504e0-4f89-41d3-9a0c-0305e82c3301
-```
+curl.exe -i http://localhost:5261/api/organizations/{id}
 
 **Ответ `200 OK`** — тот же `OrganizationResponse`.
 
 **Ответ `404 Not Found`:**
 
-```json
-{ "code": "not_found", "message": "Организация 3f2504e0-... не найдена." }
-```
-
 ### 4.3. Обновление организации
 
-```http
-PUT /api/organizations/3f2504e0-4f89-41d3-9a0c-0305e82c3301
-Content-Type: application/json
-
-{
-  "name": "ООО Ромашка (обновлено)",
-  "description": "Новое описание"
-}
-```
+curl.exe -i -X PUT http://localhost:5261/api/organizations/{id} -H "Content-Type: application/json" -d @body-update.json
 
 **Ответ `200 OK`** — обновлённый `OrganizationResponse`.
 
 ### 4.4. Удаление организации
 
-```http
-DELETE /api/organizations/3f2504e0-4f89-41d3-9a0c-0305e82c3301
-```
+curl.exe -i -X DELETE http://localhost:5261/api/organizations/{id}
 
 **Ответ `204 No Content`** — без тела.
 
 **Ответ `409 Conflict`** — если есть workspace'ы:
 
-```json
-{
-  "code": "conflict",
-  "message": "Организация содержит рабочие пространства. Удалите их перед удалением организации."
-}
-```
-
 ### 4.5. Список рабочих пространств
 
-```http
-GET /api/organizations/3f2504e0-4f89-41d3-9a0c-0305e82c3301/workspaces
-```
+curl.exe -i http://localhost:5261/api/organizations/{orgId}/workspaces
 
 **Ответ `200 OK`:**
 
-```json
-[
-  {
-    "id": "8c2d2e0a-1b3c-4d5e-8f7a-9b0c1d2e3f40",
-    "organizationId": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
-    "name": "Основное",
-    "sections": [ /* SectionResponse[] */ ]
-  }
-]
-```
-
 ### 4.6. Создание рабочего пространства (с разделами атомарно)
 
-```http
-POST /api/organizations/3f2504e0-4f89-41d3-9a0c-0305e82c3301/workspaces
-Content-Type: application/json
-
-{
-  "name": "Основное",
-  "sections": [
-    { "type": "clients", "title": "Клиенты", "position": 0, "enabled": true },
-    { "type": "tasks",   "title": "Задачи",  "position": 1, "enabled": true }
-  ]
-}
-```
-
-- `sections: null` или `sections: []` → workspace без разделов.
-- Разделы создаются в одной транзакции с workspace.
+curl.exe -i -X POST http://localhost:5261/api/organizations/{orgId}/workspaces -H "Content-Type: application/json" -d @workspace.json
 
 **Ответ `201 Created`** (`Location: /api/workspaces/{guid}`):
 
@@ -278,104 +208,18 @@ Content-Type: application/json
 
 ### 4.7. Получение рабочего пространства
 
-```http
-GET /api/workspaces/8c2d2e0a-1b3c-4d5e-8f7a-9b0c1d2e3f40
-```
+curl.exe -i http://localhost:5261/api/workspaces/{wsId}
 
 **Ответ `200 OK`** — `WorkspaceResponse`.
 
 ### 4.8. Обновление рабочего пространства
 
-```http
-PUT /api/workspaces/8c2d2e0a-1b3c-4d5e-8f7a-9b0c1d2e3f40
-Content-Type: application/json
-
-{ "name": "Основное (переименовано)" }
-```
+curl.exe -i -X PUT http://localhost:5261/api/workspaces/{wsId}/sections -H "Content-Type: application/json" -d @sections.json
 
 **Ответ `200 OK`** — `WorkspaceResponse`.
 
 Разделы этим запросом не трогаются — для них отдельный `PUT /sections`.
 
-### 4.9. Удаление рабочего пространства
-
-```http
-DELETE /api/workspaces/8c2d2e0a-1b3c-4d5e-8f7a-9b0c1d2e3f40
-```
-
-**Ответ `204 No Content`** — разделы удаляются каскадно.
-
-### 4.10. Получение разделов
-
-```http
-GET /api/workspaces/8c2d2e0a-1b3c-4d5e-8f7a-9b0c1d2e3f40/sections
-```
-
-**Ответ `200 OK`** — упорядочено по `position`:
-
-```json
-[
-  {
-    "id": "a1b2c3d4-1111-2222-3333-444455556666",
-    "workspaceId": "8c2d2e0a-1b3c-4d5e-8f7a-9b0c1d2e3f40",
-    "type": "clients",
-    "title": "Клиенты",
-    "position": 0,
-    "enabled": true
-  }
-]
-```
-
-### 4.11. Обновление разделов (bulk-replace)
-
-Полная замена списка разделов workspace.
-
-**Семантика:**
-- Тип присутствует в теле и в хранилище — обновляется (`Title`, `Position`, `Enabled`).
-- Тип присутствует в теле, но отсутствует в хранилище — создаётся.
-- Тип отсутствует в теле, но есть в хранилище — удаляется.
-- Пустой массив — удаляет все разделы.
-
-```http
-PUT /api/workspaces/8c2d2e0a-1b3c-4d5e-8f7a-9b0c1d2e3f40/sections
-Content-Type: application/json
-
-{
-  "sections": [
-    { "type": "orders",    "title": "Заказы",     "position": 0, "enabled": true  },
-    { "type": "tasks",     "title": "Мои задачи", "position": 1, "enabled": true  },
-    { "type": "warehouse", "title": "Склад",      "position": 2, "enabled": true  },
-    { "type": "clients",   "title": "Клиенты",    "position": 3, "enabled": false }
-  ]
-}
-```
-
-**Ответ `200 OK`** — итоговый список `SectionResponse[]` в порядке `position`.
-
-**Ошибка `400`** — при дубликатах `type` или `position`:
-
-```json
-{
-  "code": "validation_error",
-  "message": "Одно или несколько полей заполнены некорректно.",
-  "details": [
-    { "field": "sections[1].type",     "message": "Тип раздела повторяется." },
-    { "field": "sections[1].position", "message": "Позиция повторяется." }
-  ]
-}
-```
-
-### 4.12. Health-check
-
-```http
-GET /api/health
-```
-
-**Ответ `200 OK`:**
-
-```json
-{ "status": "ok" }
-```
 
 ---
 
