@@ -402,3 +402,5 @@ body {
     color: #9ca3af;
     border-color: #d1d5db;
 }
+.base-error { color: #b91c1c; }
+.base-input[aria-invalid="true"] { border-color: #b91c1c; }
