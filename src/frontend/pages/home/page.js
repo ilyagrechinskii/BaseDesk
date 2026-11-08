@@ -1,3 +1,5 @@
+import { createMockOrganization } from './mock-state.js';
+
 export function mountHomePage(root, { data } = {}) {
     const draft = { name: '', description: '' };
     const icons = {
@@ -7,12 +9,18 @@ export function mountHomePage(root, { data } = {}) {
         tasks: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>`
     };
 
-    const sections = data?.sections || [
+    const sections = [
         { id: 'clients', title: 'Клиенты', desc: 'Храните контакты и информацию о клиентах.', icon: icons.clients, selected: true },
         { id: 'orders', title: 'Заказы', desc: 'Отслеживайте заказы и их выполнение.', icon: icons.orders, selected: true },
         { id: 'warehouse', title: 'Склад', desc: 'Учитывайте товары и контролируйте остатки.', icon: icons.warehouse, selected: false },
         { id: 'tasks', title: 'Задачи', desc: 'Планируйте работу и отслеживайте выполнение.', icon: icons.tasks, selected: true }
     ];
+
+    for (const section of sections) {
+        const supplied = data?.sections?.find(item => (item.key ?? item.id) === section.id);
+        if (typeof supplied?.selected === 'boolean') section.selected = supplied.selected;
+    }
+    let created = false;
 
     const renderLogo = () => `
         <div class="base-logo-header">
@@ -135,7 +143,7 @@ export function mountHomePage(root, { data } = {}) {
                 <div class="base-cards">
                     ${sections.map(sec => `
                         <label class="base-card ${sec.selected ? 'base-card--selected' : ''}">
-                            <input type="checkbox" ${sec.selected ? 'checked' : ''}>
+                            <input type="checkbox" data-section="${sec.id}" ${sec.selected ? 'checked' : ''}>
                             <div class="base-card__icon-wrapper">
                                 <div class="base-card__icon">${sec.icon}</div>
                             </div>
@@ -148,20 +156,37 @@ export function mountHomePage(root, { data } = {}) {
                     `).join('')}
                 </div>
 
+                <p class="base-hint" id="creation-result" role="status" hidden></p>
                 <div class="base-actions">
                     <button class="btn btn--secondary" id="btn-back">Назад</button>
-                    <button class="btn btn--primary" type="button" disabled title="Сохранение организации будет подключено на следующем этапе">Создать организацию</button>
+                    <button class="btn btn--primary" id="btn-create" type="button">Создать организацию</button>
                 </div>
             </div>
         `;
 
-        const cards = root.querySelectorAll('.base-card');
-        cards.forEach(card => {
+        root.querySelectorAll('.base-card').forEach(card => {
             const checkbox = card.querySelector('input');
-            card.addEventListener('click', (e) => {
-                if (e.target !== checkbox) checkbox.checked = !checkbox.checked;
+            checkbox.addEventListener('change', () => {
+                sections.find(section => section.id === checkbox.dataset.section).selected = checkbox.checked;
                 card.classList.toggle('base-card--selected', checkbox.checked);
             });
+        });
+
+        root.querySelector('#btn-create').addEventListener('click', () => {
+            if (created) return;
+            const result = createMockOrganization({
+                name: draft.name,
+                description: draft.description,
+                sectionKeys: sections.filter(section => section.selected).map(section => section.id),
+            });
+            created = true;
+            root.querySelector('#btn-create').disabled = true;
+            root.querySelector('#btn-back').disabled = true;
+            root.querySelectorAll('.base-card input').forEach(input => { input.disabled = true; });
+            const message = root.querySelector('#creation-result');
+            message.textContent = 'Организация «' + result.organization.name + '» создана. Выбранные разделы: ' + (result.sections.map(section => section.title).join(', ') || 'нет') + '.';
+            message.hidden = false;
+            root.dispatchEvent(new CustomEvent('organization-created', { bubbles: true, detail: result }));
         });
 
         root.querySelector('#btn-back').addEventListener('click', () => {
