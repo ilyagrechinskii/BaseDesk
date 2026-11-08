@@ -1,11 +1,11 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
-
 webPreferences: {
-  contextIsolation: true,
-  nodeIntegration: false,
+  contextIsolation: true;
+  nodeIntegration: false;
   preload: path.join(__dirname, 'preload.js')
 }
+
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
