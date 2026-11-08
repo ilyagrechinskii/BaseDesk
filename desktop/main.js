@@ -1,9 +1,3 @@
-webPreferences: {
-  contextIsolation: true;
-  nodeIntegration: false;
-  preload: path.join(__dirname, 'preload.js')
-}
-
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
@@ -13,8 +7,8 @@ function createWindow() {
     height: 800,
     title: 'BaseDesk',
     webPreferences: {
-      contextIsolation: true,       // Сохранено: изолированный контекст
-      nodeIntegration: false,       // Сохранено: отключена интеграция Node.js в рендерере
+      contextIsolation: true,
+      nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js')
     }
   });
@@ -33,7 +27,6 @@ app.whenReady().then(() => {
   });
 });
 
-// Гарантирует корректное завершение процесса приложения при закрытии всех окон
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
