@@ -1,0 +1,404 @@
+/* Базовые сбросы */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f8f9fa;
+    color: #111827;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* Контейнер страницы */
+.base-home-container {
+    background: #ffffff;
+    max-width: 680px;
+    width: 100%;
+    padding: 48px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* --- ЛОГОТИП --- */
+.base-logo-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.base-logo-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.5px;
+}
+
+/* --- ИНДИКАТОР ШАГОВ --- */
+.base-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 48px;
+}
+
+.base-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.base-step__circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #f3f4f6;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.base-step__label {
+    font-size: 13px;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+/* Активный шаг (синий) */
+.base-step--active .base-step__circle {
+    background-color: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+.base-step--active .base-step__label {
+    color: #2563eb;
+}
+
+/* Завершенный шаг (белый фон, синяя галочка) */
+.base-step--completed .base-step__circle {
+    background-color: #ffffff;
+    color: #2563eb;
+    border-color: #2563eb;
+    font-weight: bold;
+}
+
+/* Линия между шагами */
+.base-step__line {
+    width: 120px;
+    height: 2px;
+    background-color: #e5e7eb;
+    margin: 0 16px;
+    margin-bottom: 24px;
+    z-index: 1;
+}
+
+/* --- ЗАГОЛОВКИ --- */
+.base-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.base-title h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #111827;
+}
+
+.base-title p {
+    font-size: 15px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* --- ФОРМА (ПЕРВЫЙ ЭКРАН) --- */
+.base-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.base-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.base-form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+}
+
+/* Обертка для инпутов с иконками */
+.base-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.base-input-icon {
+    position: absolute;
+    left: 14px;
+    color: #9ca3af;
+    pointer-events: none;
+}
+
+/* Поля ввода */
+.base-input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #111827;
+    transition: border-color 0.2s;
+}
+
+.base-input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* Textarea */
+.base-textarea-wrapper {
+    align-items: flex-start;
+}
+
+.base-textarea-wrapper .base-input-icon {
+    top: 12px;
+}
+
+.base-textarea {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #111827;
+    transition: border-color 0.2s;
+    min-height: 100px;
+    resize: vertical;
+}
+
+.base-textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+.base-hint {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Блок загрузки логотипа */
+.base-upload-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+/* Квадратная серая кнопка с иконкой */
+.base-upload-box {
+    width: 72px;
+    height: 72px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    cursor: pointer;
+}
+
+/* Кнопка "Загрузить логотип" (белая) */
+.btn-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    height: 48px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    color: #2563eb;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.btn-upload:hover {
+    background: #f9fafb;
+}
+
+/* --- КАРТОЧКИ (ВТОРОЙ ЭКРАН) --- */
+.base-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.base-card {
+    display: flex;
+    align-items: flex-start;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    background: #ffffff;
+}
+
+.base-card input {
+    display: none;
+}
+
+/* Круглая обертка для иконки */
+.base-card__icon-wrapper {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eff6ff; /* Светло-синий фон */
+    border-radius: 50%; /* Круглая форма */
+    margin-right: 16px;
+    flex-shrink: 0;
+}
+
+/* Иконка внутри круга */
+.base-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563eb; /* Синий цвет иконки */
+}
+
+/* Выбранное состояние */
+.base-card--selected .base-card__icon-wrapper {
+    background: #dbeafe; /* Чуть темнее при выборе */
+}
+
+.base-card__content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #111827;
+}
+
+.base-card__content p {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.base-card__check {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid #d1d5db;
+    color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+/* Состояния карточек */
+.base-card:hover {
+    border-color: #9ca3af;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.base-card--selected {
+    border-color: #2563eb;
+    background-color: #f8faff;
+}
+
+.base-card--selected .base-card__check {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}
+
+/* --- КНОПКИ ВНИЗУ --- */
+.base-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    transition: background 0.2s;
+    font-family: inherit;
+}
+
+.btn--secondary {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.btn--secondary:hover {
+    background: #f3f4f6;
+}
+
+.btn--primary {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.btn--primary:hover {
+    background: #1d4ed8;
+}
+/* Состояние наведения (Hover) для кнопок */
+.btn--primary:hover {
+    background: #1d4ed8; /* Чуть темнее синий */
+}
+
+/* Состояние нажатия (Active) */
+.btn--primary:active {
+    background: #1e40af; /* Еще темнее */
+}
+
+/* Неактивная кнопка (Disabled) */
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #d1d5db; /* Серый фон */
+    color: #9ca3af;
+    border-color: #d1d5db;
+}
