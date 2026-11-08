@@ -7,7 +7,7 @@ public record CreateWorkspaceRequest(
     [Required, StringLength(120, MinimumLength = 1)] string Name,
     IReadOnlyList<SectionItemRequest>? Sections) : IValidatableObject
 {
-    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    public IEnumerable<ValidationResult> Validate(ValidationContext _)
     {
         if (Sections is null) yield break;
 
@@ -18,7 +18,15 @@ public record CreateWorkspaceRequest(
         {
             var s = Sections[i];
 
-            // Рекурсивная проверка DataAnnotations у элемента
+            // 1) Допустимость enum (default(SectionType) = 0, такого значения нет)
+            if (!Enum.IsDefined(typeof(SectionType), s.Type))
+            {
+                yield return new ValidationResult(
+                    "Недопустимый тип раздела.",
+                    new[] { $"sections[{i}].type" });
+            }
+
+            // 2) Рекурсивная проверка DataAnnotations у элемента
             var itemResults = new List<ValidationResult>();
             if (!Validator.TryValidateObject(
                     s, new ValidationContext(s), itemResults, validateAllProperties: true))
@@ -36,11 +44,13 @@ public record CreateWorkspaceRequest(
                 }
             }
 
-            if (!seenTypes.Add(s.Type))
+            // 3) Уникальность Type
+            if (Enum.IsDefined(typeof(SectionType), s.Type) && !seenTypes.Add(s.Type))
                 yield return new ValidationResult(
                     "Тип раздела повторяется.",
                     new[] { $"sections[{i}].type" });
 
+            // 4) Уникальность Position
             if (!seenPositions.Add(s.Position))
                 yield return new ValidationResult(
                     "Позиция повторяется.",
