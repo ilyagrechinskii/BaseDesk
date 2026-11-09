@@ -1,0 +1,62 @@
+:root{
+  --bg:#eef4fb; --surface:#fff; --text:#16244a; --muted:#6f82a8; --border:#e1e9f5;
+  --accent:#2f6fed; --accent-soft:#e3eeff; --row-hover:#f6f9fe; --radius:14px;
+  --shadow:0 10px 30px rgba(34,68,140,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#f4f8fe,#eaf1fa);min-height:100vh;color:var(--text);
+  font:13px/1.4 Manrope,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit}
+svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.home{max-width:1100px;margin:0 auto;padding:28px 32px}
+
+.head{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px}
+.head__text{flex:1}
+.title{margin:0;font-size:22px;font-weight:700}
+.subtitle{margin:2px 0 0;color:var(--muted)}
+.head__actions{display:flex;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px;border:1px solid var(--border);
+  border-radius:10px;background:var(--surface);font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(34,68,140,.05)}
+.btn:hover{background:var(--row-hover)}
+.btn--ai svg{color:#7c3aed}
+.btn--ai.is-active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.btn--icon{width:40px;padding:0;justify-content:center}
+.btn:focus-visible,.section-card:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+.layout{display:grid;grid-template-columns:1fr 270px;gap:20px;align-items:start}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(240px,1fr));gap:18px}
+
+.section-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;
+  display:flex;flex-direction:column;justify-content:space-between;min-height:198px;cursor:pointer;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;box-shadow:0 2px 8px rgba(34,68,140,.04)}
+.section-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#cddbf0}
+.section-card__top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px}
+.section-card__icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center}
+.section-card__icon svg{width:22px;height:22px}
+.section-card__icon--blue{background:#dbeafe;color:#2f6fed}
+.section-card__icon--purple{background:#efeafe;color:#7c3aed}
+.section-card__icon--green{background:#dcfce7;color:#16a34a}
+.section-card__icon--orange{background:#ffedd5;color:#ea580c}
+.section-card__arrow{color:var(--muted);transition:transform .16s ease,color .16s ease}
+.section-card:hover .section-card__arrow{transform:translateX(3px);color:var(--text)}
+.section-card__title{margin:0 0 6px;font-size:17px;font-weight:700}
+.section-card__desc{margin:0 0 20px;color:var(--muted);line-height:1.45}
+.section-card__meta{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-size:12px;margin-top:auto}
+.section-card__meta svg{width:14px;height:14px}
+
+.ai-box{background:var(--surface);border:1px dashed #c5d4ec;border-radius:var(--radius);padding:20px;transition:border-color .2s,box-shadow .2s}
+.ai-box.is-active{border-style:solid;border-color:#7c3aed;box-shadow:var(--shadow)}
+.ai-box__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ai-box__badge{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:#7c3aed}
+.ai-box__tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#efeafe;color:#7c3aed}
+.ai-box__title{margin:0 0 6px;font-size:15px;font-weight:700}
+.ai-box__text{margin:0 0 16px;color:var(--muted);font-size:12.5px;line-height:1.45}
+.ai-box__placeholder{display:grid;gap:8px}
+.ai-box__placeholder span{display:block;height:8px;border-radius:6px;background:var(--bg)}
+.ai-box__placeholder span:nth-child(2){width:72%}
+.ai-box__placeholder span:nth-child(3){width:86%}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);padding:10px 16px;border-radius:10px;background:var(--text);color:#fff;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast--show{opacity:1}
+@media (max-width:920px){.layout{grid-template-columns:1fr}}
+@media (max-width:640px){.home{padding:16px}.head{flex-wrap:wrap}.grid{grid-template-columns:1fr}}
