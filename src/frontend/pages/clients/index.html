@@ -9,16 +9,15 @@
   <link rel="stylesheet" href="./clients.css">
 </head>
 <body>
-  <!-- Только содержимое раздела. Общий Sidebar подключается на уровне приложения. -->
   <main class="clients">
     <header class="head">
-      <button class="back" type="button" aria-label="Назад" data-demo="Назад"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button class="back" type="button" id="back-btn" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
       <div class="head__text">
         <h1 class="title">Клиенты</h1>
         <p class="subtitle">Контакты, история взаимодействий и заметки.</p>
       </div>
       <div class="head__actions">
-        <button class="btn" type="button" data-demo="Форма добавления клиента — на следующей неделе"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить</button>
+        <button class="btn" type="button" id="add-client-btn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить</button>
         <button class="btn btn--ai" type="button" data-demo="ИИ — скоро"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg>ИИ</button>
         <button class="btn btn--icon" type="button" aria-label="Уведомления" data-demo="Уведомления — скоро"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 004 0"/></svg></button>
       </div>
@@ -48,7 +47,7 @@
       <div class="empty" id="empty-state" hidden>
         <h2 class="empty__title" id="empty-title">Клиентов пока нет</h2>
         <p class="empty__text" id="empty-text">Добавьте первого клиента, чтобы он появился в списке.</p>
-        <button class="btn" type="button" id="empty-add" data-demo="Форма добавления клиента — на следующей неделе"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить клиента</button>
+        <button class="btn" type="button" id="empty-add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить клиента</button>
       </div>
 
       <footer class="foot" id="foot">
@@ -68,6 +67,78 @@
     <button class="menu__item" role="menuitem" type="button" data-action="edit"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"/></svg>Редактировать</button>
     <button class="menu__item" role="menuitem" type="button" data-action="delete"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Удалить</button>
   </div>
+
+  <div class="modal-overlay" id="modal-form" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-form-title">
+      <div class="modal__head">
+        <h2 class="modal__title" id="modal-form-title">Добавить клиента</h2>
+        <button class="modal__close" type="button" data-close-modal aria-label="Закрыть">&times;</button>
+      </div>
+      <form id="client-form" novalidate>
+        <input type="hidden" id="field-id">
+        <label class="field">
+          <span class="field__label">Имя / название компании <b class="req">*</b></span>
+          <input class="field__input" type="text" id="field-name" placeholder="Например: Альфа ООО" required>
+          <span class="field__error" id="err-name"></span>
+        </label>
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">Телефон <b class="req">*</b></span>
+            <input class="field__input" type="tel" id="field-phone" placeholder="+7 900 000-00-00" required>
+            <span class="field__error" id="err-phone"></span>
+          </label>
+          <label class="field">
+            <span class="field__label">Email <b class="req">*</b></span>
+            <input class="field__input" type="email" id="field-email" placeholder="client@company.ru" required>
+            <span class="field__error" id="err-email"></span>
+          </label>
+        </div>
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">Клиент с (год)</span>
+            <input class="field__input" type="number" id="field-since" min="2000" max="2030" value="2026">
+          </label>
+          <label class="field">
+            <span class="field__label">Заметки</span>
+            <input class="field__input" type="text" id="field-notes" placeholder="Краткий комментарий">
+          </label>
+        </div>
+        <div class="modal__foot">
+          <button class="btn" type="button" data-close-modal>Отмена</button>
+          <button class="btn btn--primary" type="submit">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-view" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-view-title">
+      <div class="modal__head">
+        <h2 class="modal__title" id="modal-view-title">Просмотр клиента</h2>
+        <button class="modal__close" type="button" data-close-modal aria-label="Закрыть">&times;</button>
+      </div>
+      <div class="details" id="view-details"></div>
+      <div class="modal__foot">
+        <button class="btn" type="button" data-close-modal>Закрыть</button>
+        <button class="btn btn--primary" type="button" id="view-edit-btn">Редактировать</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-delete" hidden>
+    <div class="modal modal--sm" role="dialog" aria-modal="true" aria-labelledby="modal-delete-title">
+      <div class="modal__head">
+        <h2 class="modal__title" id="modal-delete-title">Удалить клиента?</h2>
+        <button class="modal__close" type="button" data-close-modal aria-label="Закрыть">&times;</button>
+      </div>
+      <p class="modal__text">Вы действительно хотите удалить клиента <strong id="delete-client-name"></strong>? Это действие нельзя отменить.</p>
+      <div class="modal__foot">
+        <button class="btn" type="button" data-close-modal>Отмена</button>
+        <button class="btn btn--danger" type="button" id="confirm-delete-btn">Удалить</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="./clients.mock.js"></script>
